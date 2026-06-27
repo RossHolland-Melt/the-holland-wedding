@@ -1,16 +1,28 @@
 "use client";
 
-import { useState } from "react";
-import { stays, bandLabel, type Stay } from "@/lib/data";
-import { SectionDivider, Gable } from "./Flourishes";
+import { useMemo, useState } from "react";
+import dynamic from "next/dynamic";
+import {
+  stays,
+  bandLabel,
+  stayDistance,
+  distanceLabel,
+  type StayType,
+} from "@/lib/data";
+import { SectionDivider } from "./Flourishes";
+
+const AccommodationMap = dynamic(() => import("./AccommodationMap"), {
+  ssr: false,
+  loading: () => <div className="map__loading">Unrolling the map…</div>,
+});
 
 type Opt = { k: string; label: string };
 
 const distOpts: Opt[] = [
   { k: "any", label: "Any distance" },
-  { k: "5", label: "Under 5 km" },
+  { k: "3", label: "Under 3 km" },
+  { k: "8", label: "Under 8 km" },
   { k: "15", label: "Under 15 km" },
-  { k: "30", label: "Under 30 km" },
 ];
 const priceOpts: Opt[] = [
   { k: "any", label: "Any price" },
@@ -18,12 +30,17 @@ const priceOpts: Opt[] = [
   { k: "2", label: "R R" },
   { k: "3", label: "R R R" },
 ];
-const typeOpts: Opt[] = [
-  { k: "all", label: "All types" },
-  { k: "Guesthouse", label: "Guesthouse" },
-  { k: "Hotel", label: "Hotel" },
-  { k: "Self-catering", label: "Self-catering" },
-];
+
+// thumbnail tint by type — keeps the card grid looking warm without photos
+const TONES: Record<StayType, string> = {
+  Guesthouse: "#EFDCDE",
+  Hotel: "#EDE0C9",
+  "Self-catering": "#E3E7DD",
+  "B&B": "#E7E3D6",
+  Lodge: "#DDE5DC",
+  "Farm stay": "#E3E7DD",
+  Cottage: "#EFE7D8",
+};
 
 function PhotoIcon({ stroke = "#7d8763" }: { stroke?: string }) {
   return (
@@ -47,26 +64,38 @@ function PhotoIcon({ stroke = "#7d8763" }: { stroke?: string }) {
   );
 }
 
+// stays carry their distance once, computed from real coordinates
+const withDist = stays
+  .map((s) => ({ ...s, km: stayDistance(s) }))
+  .sort((a, b) => a.km - b.km);
+
 export default function Accommodation() {
-  const [activeId, setActiveId] = useState("klapmuts");
+  const [activeId, setActiveId] = useState<string | null>(null);
   const [fDist, setFDist] = useState("any");
   const [fPrice, setFPrice] = useState("any");
   const [fType, setFType] = useState("all");
+  const [query, setQuery] = useState("");
 
-  const active = stays.find((s) => s.id === activeId) ?? stays[0];
+  // type chips reflect only the types that actually appear in the data
+  const typeOpts = useMemo<Opt[]>(() => {
+    const seen = Array.from(new Set(stays.map((s) => s.type)));
+    return [{ k: "all", label: "All types" }, ...seen.map((t) => ({ k: t, label: t }))];
+  }, []);
 
-  const filtered = stays.filter((s) => {
-    if (fDist !== "any" && s.dist > Number(fDist)) return false;
-    if (fPrice !== "any" && s.band !== Number(fPrice)) return false;
-    if (fType !== "all" && s.type !== fType) return false;
-    return true;
-  });
+  const filtered = useMemo(() => {
+    const q = query.trim().toLowerCase();
+    return withDist.filter((s) => {
+      if (fDist !== "any" && s.km > Number(fDist)) return false;
+      if (fPrice !== "any" && s.band !== Number(fPrice)) return false;
+      if (fType !== "all" && s.type !== fType) return false;
+      if (q && !`${s.name} ${s.area} ${s.type}`.toLowerCase().includes(q)) return false;
+      return true;
+    });
+  }, [fDist, fPrice, fType, query]);
 
-  const renderChips = (
-    opts: Opt[],
-    current: string,
-    set: (k: string) => void,
-  ) =>
+  const active = filtered.find((s) => s.id === activeId) ?? null;
+
+  const renderChips = (opts: Opt[], current: string, set: (k: string) => void) =>
     opts.map((o) => (
       <button
         key={o.k}
@@ -84,114 +113,51 @@ export default function Accommodation() {
       <div className="eyebrow">Cape Winelands</div>
       <h2 className="serif-heading">Where to Stay</h2>
       <p className="lead">
-        A handful of lovely places near the farm &mdash; tap a pin to see more.
+        Lovely places to lay your head near the farm &mdash; tap a pin or a card to
+        find your bearings, then book straight through.
       </p>
 
-      {/* MAP */}
       <div className="map">
-        <svg
-          viewBox="0 0 110 48"
-          preserveAspectRatio="xMidYMid slice"
-          width="100%"
-          height="100%"
-          className="map__svg"
-        >
-          <g stroke="#CBD3B6" strokeWidth="0.25" opacity="0.85">
-            <path d="M6,27 H26 M6,29 H26 M6,31 H26 M6,33 H26 M6,35 H26" />
-            <path d="M86,13 H103 M86,15 H103 M86,17 H103 M86,19 H103" />
-            <path d="M40,38 H58 M40,40 H58 M40,42 H58" />
-          </g>
-          <path
-            d="M0,11 L12,4 L22,10 L34,3 L46,11 L58,4 L70,10 L82,3 L94,10 L110,4"
-            fill="none"
-            stroke="#A8B39C"
-            strokeWidth="0.4"
-          />
-          <path
-            d="M-2,40 C20,34 30,44 50,40 C70,36 84,46 112,40"
-            fill="none"
-            stroke="#9DB0A4"
-            strokeWidth="1.1"
-          />
-          <path
-            d="M-2,20 C28,18 40,30 62,30 C84,30 96,22 112,24"
-            fill="none"
-            stroke="#C8A878"
-            strokeWidth="1.2"
-          />
-          <path
-            d="M55,2 C54,16 56,30 58,46"
-            fill="none"
-            stroke="#C8A878"
-            strokeWidth="1.2"
-          />
-          <text x="10" y="45" fontFamily="Jost,sans-serif" fontSize="2.3" fill="#a39a84" letterSpacing="0.18">
-            STELLENBOSCH
-          </text>
-          <text x="88" y="46" fontFamily="Jost,sans-serif" fontSize="2.3" fill="#a39a84" letterSpacing="0.18">
-            PAARL
-          </text>
-          <text x="60" y="6" fontFamily="Jost,sans-serif" fontSize="2.3" fill="#a39a84" letterSpacing="0.18">
-            SIMONSBERG
-          </text>
-          <text x="40" y="16" fontFamily="Jost,sans-serif" fontSize="2.3" fill="#a39a84" letterSpacing="0.18">
-            KLAPMUTS
-          </text>
-        </svg>
+        <AccommodationMap stays={filtered} activeId={activeId} onSelect={setActiveId} />
+      </div>
 
-        {/* venue marker */}
-        <div className="map__venue">
-          <Gable width={40} strokeWidth={3} color="var(--green)" />
-          <div className="map__venue-label">Natte Valleij</div>
-        </div>
-
-        {/* stay pins */}
-        {stays.map((s, i) => (
-          <button
-            key={s.id}
-            type="button"
-            aria-label={s.name}
-            className={`map__pin${s.id === activeId ? " map__pin--active" : ""}`}
-            style={{ left: `${s.x}%`, top: `${s.y}%` }}
-            onClick={() => setActiveId(s.id)}
-          >
-            {i + 1}
-          </button>
-        ))}
-
-        {/* desktop popover */}
-        <div className="pop" style={{ left: `${active.x}%`, top: `${active.y}%` }}>
-          <div className="pop__card">
-            <div className="pop__type">{active.type}</div>
-            <div className="pop__name">{active.name}</div>
-            <div className="pop__meta">
-              {active.distLabel} · {bandLabel(active.band)}
-            </div>
-            <div className="pop__price">{active.price}</div>
-            <a href="#stay" className="pop__link">
-              View &amp; book →
+      {/* active stay shown below the map on mobile (popups handle desktop) */}
+      {active && (
+        <div className="active-card">
+          <div className="stay-card__type">{active.type}</div>
+          <div className="pop__name">{active.name}</div>
+          <div className="pop__meta" style={{ marginBottom: 10 }}>
+            {active.blurb}
+          </div>
+          <div className="stay-card__meta">
+            <span className="stay-card__dist">
+              {distanceLabel(active.km)} · {bandLabel(active.band)}
+            </span>
+            <a
+              className="stay-card__price stay-card__link"
+              href={active.url}
+              target="_blank"
+              rel="noopener noreferrer"
+            >
+              {active.price} →
             </a>
           </div>
         </div>
-      </div>
+      )}
 
-      {/* mobile active card */}
-      <div className="active-card">
-        <div className="pop__type">{active.type}</div>
-        <div className="pop__name">{active.name}</div>
-        <div className="pop__meta" style={{ marginBottom: 10 }}>
-          {active.blurb}
-        </div>
-        <div className="stay-card__meta">
-          <span className="stay-card__dist">
-            {active.distLabel} · {bandLabel(active.band)}
-          </span>
-          <span className="stay-card__price">{active.price}</span>
-        </div>
-      </div>
-
-      {/* filters */}
+      {/* search + filters */}
       <div className="filters">
+        <div className="filter-search">
+          <div className="filter-label">Search</div>
+          <input
+            type="search"
+            className="search-input"
+            placeholder="Name or area…"
+            value={query}
+            onChange={(e) => setQuery(e.target.value)}
+            aria-label="Search accommodation"
+          />
+        </div>
         <div>
           <div className="filter-label">Distance</div>
           <div className="chips">{renderChips(distOpts, fDist, setFDist)}</div>
@@ -209,10 +175,10 @@ export default function Accommodation() {
       {/* cards */}
       {filtered.length > 0 ? (
         <div className="cards">
-          {filtered.map((s: Stay) => (
+          {filtered.map((s, i) => (
             <div
               key={s.id}
-              className="stay-card"
+              className={`stay-card${s.id === activeId ? " stay-card--active" : ""}`}
               onClick={() => setActiveId(s.id)}
               role="button"
               tabIndex={0}
@@ -223,7 +189,11 @@ export default function Accommodation() {
                 }
               }}
             >
-              <div className="stay-card__thumb" style={{ background: s.tone }}>
+              <div
+                className="stay-card__thumb"
+                style={{ background: TONES[s.type] ?? "#E3E7DD" }}
+              >
+                <span className="stay-card__num">{i + 1}</span>
                 <PhotoIcon />
               </div>
               <div className="stay-card__body">
@@ -232,9 +202,17 @@ export default function Accommodation() {
                 <div className="stay-card__blurb">{s.blurb}</div>
                 <div className="stay-card__meta">
                   <span className="stay-card__dist">
-                    {s.distLabel} · {bandLabel(s.band)}
+                    {distanceLabel(s.km)} · {bandLabel(s.band)}
                   </span>
-                  <span className="stay-card__price">{s.price}</span>
+                  <a
+                    className="stay-card__price stay-card__link"
+                    href={s.url}
+                    target="_blank"
+                    rel="noopener noreferrer"
+                    onClick={(e) => e.stopPropagation()}
+                  >
+                    {s.price} →
+                  </a>
                 </div>
               </div>
             </div>
