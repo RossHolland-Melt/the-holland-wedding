@@ -12,6 +12,8 @@ const eslintConfig = defineConfig([
     "out/**",
     "build/**",
     "next-env.d.ts",
+    // Original Design Composer mockup kept for reference only.
+    "design/**",
   ]),
 ]);
 
