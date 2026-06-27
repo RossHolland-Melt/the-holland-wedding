@@ -7,8 +7,9 @@ export default function Story() {
       <div className="eyebrow">Welcome</div>
       <h2 className="script-heading">Our Story</h2>
       <p className="story__text">
-        From a first date that ran far too long to a quiet <em>yes</em> beneath
-        the oaks, every winding road has led us here. On the tenth of April,
+        From a first date that ran far too long to a quiet <em>yes</em>{" "}
+        beneath the oaks, every winding road has led us here. On the tenth of
+        April,
         surrounded by the people we love most, we&rsquo;ll say our vows among the
         vines at Natte Valleij. This little corner of the internet holds
         everything you need &mdash; when to arrive, where to lay your head, and
