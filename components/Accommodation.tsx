@@ -1,6 +1,6 @@
 "use client";
 
-import { useMemo, useState } from "react";
+import { useEffect, useMemo, useState } from "react";
 import dynamic from "next/dynamic";
 import {
   stays,
@@ -75,6 +75,22 @@ export default function Accommodation() {
   const [fPrice, setFPrice] = useState("any");
   const [fType, setFType] = useState("all");
   const [query, setQuery] = useState("");
+  const [expanded, setExpanded] = useState(false);
+
+  // While the map is full-screen, lock body scroll and allow Esc to close.
+  useEffect(() => {
+    if (!expanded) return;
+    const prev = document.body.style.overflow;
+    document.body.style.overflow = "hidden";
+    const onKey = (e: KeyboardEvent) => {
+      if (e.key === "Escape") setExpanded(false);
+    };
+    window.addEventListener("keydown", onKey);
+    return () => {
+      document.body.style.overflow = prev;
+      window.removeEventListener("keydown", onKey);
+    };
+  }, [expanded]);
 
   // type chips reflect only the types that actually appear in the data
   const typeOpts = useMemo<Opt[]>(() => {
@@ -117,8 +133,43 @@ export default function Accommodation() {
         find your bearings, then book straight through.
       </p>
 
-      <div className="map">
-        <AccommodationMap stays={filtered} activeId={activeId} onSelect={setActiveId} />
+      <div className={`map${expanded ? " map--full" : ""}`}>
+        <AccommodationMap
+          stays={filtered}
+          activeId={activeId}
+          onSelect={setActiveId}
+          expanded={expanded}
+        />
+        <button
+          type="button"
+          className="map__expand"
+          onClick={() => setExpanded((v) => !v)}
+          aria-label={expanded ? "Close full-screen map" : "Expand map to full screen"}
+        >
+          {expanded ? (
+            <svg viewBox="0 0 24 24" width="20" height="20" aria-hidden="true">
+              <path
+                d="M6 6 L18 18 M18 6 L6 18"
+                fill="none"
+                stroke="currentColor"
+                strokeWidth="2"
+                strokeLinecap="round"
+              />
+            </svg>
+          ) : (
+            <svg viewBox="0 0 24 24" width="20" height="20" aria-hidden="true">
+              <path
+                d="M9 3 H3 V9 M15 3 H21 V9 M21 15 V21 H15 M9 21 H3 V15"
+                fill="none"
+                stroke="currentColor"
+                strokeWidth="2"
+                strokeLinecap="round"
+                strokeLinejoin="round"
+              />
+            </svg>
+          )}
+          <span className="map__expand-label">{expanded ? "Close" : "Expand"}</span>
+        </button>
       </div>
 
       {/* active stay shown below the map on mobile (popups handle desktop) */}

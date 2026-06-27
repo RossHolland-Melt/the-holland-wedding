@@ -10,6 +10,7 @@ type Props = {
   stays: Stay[]; // already filtered + sorted (closest first)
   activeId: string | null;
   onSelect: (id: string) => void;
+  expanded?: boolean; // full-screen toggle — triggers a Leaflet resize
 };
 
 const VENUE_ICON = L.divIcon({
@@ -35,29 +36,45 @@ function stayIcon(n: number, active: boolean) {
   });
 }
 
+function fitToStays(map: L.Map, stays: Stay[]) {
+  if (stays.length === 0) {
+    map.setView([venue.lat, venue.lng], 13);
+    return;
+  }
+  const pts: L.LatLngExpression[] = [
+    [venue.lat, venue.lng],
+    ...stays.map((s) => [s.lat, s.lng] as L.LatLngExpression),
+  ];
+  map.fitBounds(L.latLngBounds(pts), { padding: [48, 48], maxZoom: 14 });
+}
+
 function MapController({
   stays,
   activeId,
+  expanded,
   markersRef,
 }: {
   stays: Stay[];
   activeId: string | null;
+  expanded?: boolean;
   markersRef: React.MutableRefObject<Record<string, L.Marker>>;
 }) {
   const map = useMap();
 
   // Frame the venue plus every visible stay whenever the filtered set changes.
   useEffect(() => {
-    const pts: L.LatLngExpression[] = [
-      [venue.lat, venue.lng],
-      ...stays.map((s) => [s.lat, s.lng] as L.LatLngExpression),
-    ];
-    if (stays.length === 0) {
-      map.setView([venue.lat, venue.lng], 13);
-      return;
-    }
-    map.fitBounds(L.latLngBounds(pts), { padding: [48, 48], maxZoom: 14 });
+    fitToStays(map, stays);
   }, [stays, map]);
+
+  // When the container changes size (expand / collapse), tell Leaflet and refit.
+  useEffect(() => {
+    const t = setTimeout(() => {
+      map.invalidateSize();
+      fitToStays(map, stays);
+    }, 260);
+    return () => clearTimeout(t);
+    // eslint-disable-next-line react-hooks/exhaustive-deps
+  }, [expanded, map]);
 
   // Fly to and open the active stay's popup when selection changes.
   useEffect(() => {
@@ -75,7 +92,7 @@ function MapController({
   return null;
 }
 
-export default function AccommodationMap({ stays, activeId, onSelect }: Props) {
+export default function AccommodationMap({ stays, activeId, onSelect, expanded }: Props) {
   const markersRef = useRef<Record<string, L.Marker>>({});
 
   // Stable initial view; MapController refines bounds after mount.
@@ -141,7 +158,12 @@ export default function AccommodationMap({ stays, activeId, onSelect }: Props) {
         );
       })}
 
-      <MapController stays={stays} activeId={activeId} markersRef={markersRef} />
+      <MapController
+        stays={stays}
+        activeId={activeId}
+        expanded={expanded}
+        markersRef={markersRef}
+      />
     </MapContainer>
   );
 }
