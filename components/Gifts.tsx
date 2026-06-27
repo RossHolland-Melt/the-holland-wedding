@@ -1,14 +1,5 @@
 import { SectionDivider } from "./Flourishes";
-
-const giftRows = [
-  ["Account holder", "Chloe Evelyn Alannah Lucas"],
-  ["Bank", "Discovery Bank"],
-  ["Account type", "Savings"],
-  ["Account number", "12758643160"],
-  ["Branch code", "679000"],
-  ["SWIFT / BIC", "DISCZAJJXXX"],
-  ["Reference", "Your name"],
-];
+import GiftDetails from "./GiftDetails";
 
 export default function Gifts() {
   return (
@@ -26,16 +17,7 @@ export default function Gifts() {
         our gratitude.
       </p>
 
-      <div className="gift-card">
-        <div className="gift-card__title">The Honeymoon Fund</div>
-        <div className="gift-card__sub">A toast to our next adventure</div>
-        {giftRows.map(([label, value]) => (
-          <div key={label} className="gift-row">
-            <span>{label}</span>
-            <span>{value}</span>
-          </div>
-        ))}
-      </div>
+      <GiftDetails />
     </section>
   );
 }

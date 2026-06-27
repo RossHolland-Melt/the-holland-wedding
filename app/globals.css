@@ -506,6 +506,8 @@ a {
 .gift-row {
   display: flex;
   justify-content: space-between;
+  align-items: center;
+  gap: 12px;
   padding: 11px 0;
   border-bottom: 1px dotted var(--dotted);
   font: 400 17px var(--font-serif);
@@ -513,14 +515,43 @@ a {
 .gift-row:last-of-type {
   border-bottom: none;
 }
-.gift-row span:first-child {
+.gift-row__label {
   color: var(--muted);
 }
-.gift-row span:last-child {
+.gift-row__val {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+  color: var(--green);
+  text-align: right;
+}
+.gift-row__copy {
+  background: none;
+  border: none;
+  cursor: pointer;
+  padding: 4px;
+  margin: -4px -4px -4px 0;
+  display: inline-flex;
+  align-items: center;
+  color: var(--muted-2);
+  border-radius: 4px;
+  transition: color 0.15s, background 0.15s;
+}
+.gift-row__copy:hover {
+  color: var(--green);
+  background: rgba(95, 96, 57, 0.08);
+}
+.gift-row__copy.is-copied {
   color: var(--green);
 }
-.gift-card .btn-outline {
+.gift-copy-all {
   margin-top: 24px;
+  cursor: pointer;
+  transition: background 0.2s, color 0.2s;
+}
+.gift-copy-all.is-copied {
+  background: var(--green);
+  color: var(--paper);
 }
 
 /* accommodation */
@@ -866,6 +897,16 @@ a {
   }
   .form__row {
     grid-template-columns: 1fr;
+  }
+
+  .gift-row {
+    flex-direction: column;
+    align-items: stretch;
+    gap: 4px;
+  }
+  .gift-row__val {
+    justify-content: space-between;
+    text-align: left;
   }
 
   .map {
