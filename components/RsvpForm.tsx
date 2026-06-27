@@ -15,13 +15,11 @@ export default function RsvpForm() {
 
     const form = e.currentTarget;
     const data = new FormData(form);
-    const guests = parseInt(String(data.get("guest_count") ?? ""), 10);
 
     setStatus("sending");
     const result = await submitRsvp({
       full_name: String(data.get("full_name") ?? ""),
       attending,
-      guest_count: Number.isNaN(guests) ? null : guests,
       dietary: String(data.get("dietary") ?? ""),
       song_request: String(data.get("song_request") ?? ""),
       message: String(data.get("message") ?? ""),
@@ -92,33 +90,17 @@ export default function RsvpForm() {
             </div>
           </div>
 
-          <div className="form__row field">
-            <div>
-              <label className="label" htmlFor="guest_count">
-                Guests in your party
-              </label>
-              <input
-                id="guest_count"
-                name="guest_count"
-                type="number"
-                min="1"
-                inputMode="numeric"
-                placeholder="2"
-                className="input"
-              />
-            </div>
-            <div>
-              <label className="label" htmlFor="dietary">
-                Dietary requirements
-              </label>
-              <input
-                id="dietary"
-                name="dietary"
-                type="text"
-                placeholder="Vegetarian, allergies…"
-                className="input"
-              />
-            </div>
+          <div className="field">
+            <label className="label" htmlFor="dietary">
+              Dietary requirements
+            </label>
+            <input
+              id="dietary"
+              name="dietary"
+              type="text"
+              placeholder="Vegetarian, allergies…"
+              className="input"
+            />
           </div>
 
           <div className="field">

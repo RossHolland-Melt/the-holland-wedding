@@ -50,8 +50,3 @@ read other responses — view them in the Supabase **Table Editor**.
 
 - `main` → production deploy
 - `staging` → preview deploys
-
-## To-do (content placeholders)
-
-- Real banking details + a "contribute online" link in **Gifts**
-- Real contact email / phone in the **Footer**

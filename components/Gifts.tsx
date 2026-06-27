@@ -1,11 +1,12 @@
 import { SectionDivider } from "./Flourishes";
 
-// NOTE: banking details below are placeholders from the mockup — replace with
-// the couple's real account info and a real "contribute online" link.
 const giftRows = [
-  ["Account name", "R & C Lucas"],
-  ["Bank", "[ Your bank ]"],
-  ["Account number", "•••• •••• 4027"],
+  ["Account holder", "Chloe Evelyn Alannah Lucas"],
+  ["Bank", "Discovery Bank"],
+  ["Account type", "Savings"],
+  ["Account number", "12758643160"],
+  ["Branch code", "679000"],
+  ["SWIFT / BIC", "DISCZAJJXXX"],
   ["Reference", "Your name"],
 ];
 
@@ -34,9 +35,6 @@ export default function Gifts() {
             <span>{value}</span>
           </div>
         ))}
-        <a href="#gifts" className="btn-outline">
-          Contribute online
-        </a>
       </div>
     </section>
   );

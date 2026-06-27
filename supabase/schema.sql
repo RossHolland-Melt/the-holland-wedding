@@ -6,7 +6,6 @@ create table if not exists public.rsvps (
   id           uuid primary key default gen_random_uuid(),
   full_name    text not null,
   attending    boolean not null default true,
-  guest_count  int,
   dietary      text,
   song_request text,
   message      text,

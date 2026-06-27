@@ -6,7 +6,6 @@ import { createClient } from "@/utils/supabase/server";
 export type RsvpInput = {
   full_name: string;
   attending: boolean;
-  guest_count: number | null;
   dietary: string;
   song_request: string;
   message: string;
@@ -26,7 +25,6 @@ export async function submitRsvp(input: RsvpInput): Promise<RsvpResult> {
   const { error } = await supabase.from("rsvps").insert({
     full_name: name,
     attending: input.attending,
-    guest_count: Number.isFinite(input.guest_count) ? input.guest_count : null,
     dietary: input.dietary?.trim() || null,
     song_request: input.song_request?.trim() || null,
     message: input.message?.trim() || null,

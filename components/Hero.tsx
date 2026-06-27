@@ -9,7 +9,7 @@ export default function Hero() {
         width={1920}
         height={1080}
         priority
-        sizes="(max-width: 768px) 90vw, 940px"
+        sizes="(max-width: 768px) 88vw, 560px"
         className="hero__img"
       />
 

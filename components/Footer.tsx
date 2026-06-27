@@ -9,9 +9,11 @@ export default function Footer() {
       <div className="footer__meta">
         10 April 2027 · Natte Valleij Estate · Cape Winelands
       </div>
-      {/* TODO: replace with the couple's real contact details */}
       <div className="footer__contact">
-        rossandchloe2027@email.com · +27 00 000 0000
+        <a href="mailto:rosschloeholland@gmail.com">
+          rosschloeholland@gmail.com
+        </a>{" "}
+        · <a href="tel:+27718646982">+27 71 864 6982</a>
       </div>
     </footer>
   );
