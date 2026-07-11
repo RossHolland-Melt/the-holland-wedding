@@ -559,88 +559,197 @@ a {
   position: relative;
   max-width: 1100px;
   margin: 0 auto;
-  height: 480px;
+  height: 520px;
   background: var(--map-bg);
   border: 1px solid var(--border);
   border-radius: 16px;
   overflow: hidden;
+  /* contain Leaflet's internal high z-indexes so they never cover the nav */
+  isolation: isolate;
+  z-index: 0;
 }
-.map__svg {
-  position: absolute;
+.map.map--full {
+  position: fixed;
   inset: 0;
+  width: 100vw;
+  width: 100dvw;
+  height: 100vh;
+  height: 100dvh;
+  max-width: none;
+  margin: 0;
+  border: none;
+  border-radius: 0;
+  z-index: 1000;
 }
-.map__venue {
+.map__expand {
   position: absolute;
-  left: 50%;
-  top: 46%;
-  transform: translate(-50%, -50%);
-  z-index: 6;
-  text-align: center;
-}
-.map__venue-label {
-  margin-top: 4px;
-  font: 600 11px/1 var(--font-sans);
-  letter-spacing: 0.14em;
-  text-transform: uppercase;
-  color: var(--green);
-  white-space: nowrap;
-  background: rgba(244, 238, 226, 0.7);
-  padding: 2px 6px;
-  border-radius: 3px;
-}
-.map__pin {
-  position: absolute;
-  transform: translate(-50%, -50%);
+  top: 12px;
+  right: 12px;
+  z-index: 1200;
+  display: inline-flex;
+  align-items: center;
+  gap: 7px;
+  padding: 8px 13px 8px 11px;
+  border: 1px solid var(--border);
   border-radius: 999px;
-  border: 2px solid var(--card);
+  background: var(--card);
+  color: var(--green);
+  cursor: pointer;
+  box-shadow: 0 3px 10px rgba(11, 22, 55, 0.16);
+  font: 600 11px/1 var(--font-sans);
+  letter-spacing: 0.12em;
+  text-transform: uppercase;
+  transition: background 0.15s, color 0.15s;
+}
+.map__expand:hover {
+  background: var(--green);
+  color: var(--paper);
+}
+.leaflet-root {
+  width: 100%;
+  height: 100%;
+  background: var(--map-bg);
+  font-family: var(--font-sans);
+}
+.map__loading {
   display: flex;
   align-items: center;
   justify-content: center;
-  font: 600 11px/1 var(--font-sans);
-  color: var(--card);
-  cursor: pointer;
-  box-shadow: 0 3px 8px rgba(11, 22, 55, 0.22);
-  transition: all 0.15s;
-  padding: 0;
-  width: 24px;
-  height: 24px;
-  background: var(--accent);
-  z-index: 2;
+  height: 100%;
+  font: 400 17px var(--font-serif);
+  font-style: italic;
+  color: var(--muted);
 }
-.map__pin--active {
+/* warm the cool CARTO tiles a touch toward the paper palette */
+.leaflet-tile-pane {
+  filter: sepia(0.12) saturate(0.92) brightness(1.02);
+}
+.leaflet-container a.leaflet-popup-close-button {
+  color: var(--muted-2);
+}
+.leaflet-control-attribution {
+  background: rgba(251, 247, 238, 0.78) !important;
+  font: 400 10px/1.4 var(--font-sans) !important;
+  color: var(--muted-2) !important;
+}
+.leaflet-control-attribution a {
+  color: var(--muted-soft) !important;
+}
+.leaflet-control-zoom a {
+  color: var(--green) !important;
+  background: var(--card) !important;
+  border-color: var(--border) !important;
+}
+
+/* venue marker — green heart pin with a permanent label */
+.venue-marker,
+.stay-marker {
+  background: none;
+  border: none;
+}
+.venue-marker__pin {
+  display: block;
+  filter: drop-shadow(0 4px 5px rgba(11, 22, 55, 0.3));
+}
+.venue-marker__pin svg {
   width: 30px;
-  height: 30px;
+  height: 40px;
+  display: block;
+}
+.venue-marker__pin path {
+  fill: var(--green);
+}
+.venue-marker__pin .venue-marker__heart {
+  fill: var(--paper);
+}
+.venue-tip {
+  background: var(--green) !important;
+  color: var(--paper) !important;
+  border: none !important;
+  box-shadow: 0 3px 8px rgba(11, 22, 55, 0.22) !important;
+  font: 600 10px/1 var(--font-sans) !important;
+  letter-spacing: 0.14em;
+  text-transform: uppercase;
+  padding: 4px 8px !important;
+  border-radius: 4px !important;
+}
+.venue-tip::before {
+  display: none !important;
+}
+
+/* numbered stay pins */
+.stay-marker__dot {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  width: 28px;
+  height: 28px;
+  border-radius: 999px;
+  border: 2px solid var(--card);
+  background: var(--accent);
+  color: var(--card);
+  font: 600 12px/1 var(--font-sans);
+  box-shadow: 0 3px 8px rgba(11, 22, 55, 0.22);
+  cursor: pointer;
+  transition: transform 0.12s;
+}
+.stay-marker--active .stay-marker__dot {
+  width: 34px;
+  height: 34px;
   background: var(--green);
-  z-index: 5;
+  font-size: 14px;
 }
-.pop {
-  position: absolute;
-  width: 230px;
-  z-index: 10;
-  transform: translate(-50%, calc(-100% - 20px));
-}
-.pop__card {
+
+/* leaflet popup, restyled to match the cards */
+.stay-popup .leaflet-popup-content-wrapper {
   background: var(--card);
   border: 1px solid #e2d9c6;
   border-radius: 12px;
   box-shadow: 0 16px 34px rgba(11, 22, 55, 0.2);
-  padding: 16px 18px;
-  position: relative;
   text-align: left;
 }
-.pop__card::after {
-  content: "";
-  position: absolute;
-  left: 50%;
-  bottom: -8px;
-  transform: translateX(-50%) rotate(45deg);
-  width: 14px;
-  height: 14px;
-  background: var(--card);
-  border-right: 1px solid #e2d9c6;
-  border-bottom: 1px solid #e2d9c6;
+.stay-popup .leaflet-popup-content {
+  margin: 15px 18px;
+  width: 210px !important;
 }
-.pop__type,
+.stay-popup .leaflet-popup-tip {
+  background: var(--card);
+  border: 1px solid #e2d9c6;
+}
+.stay-popup__type {
+  font: 400 10px/1 var(--font-sans);
+  letter-spacing: 0.2em;
+  text-transform: uppercase;
+  color: var(--accent);
+  margin-bottom: 6px;
+}
+.stay-popup__name {
+  font: 600 20px/1.15 var(--font-serif);
+  color: var(--green);
+  margin-bottom: 6px;
+}
+.stay-popup__meta {
+  font: 400 13px/1.4 var(--font-serif);
+  color: var(--muted);
+  margin-bottom: 4px;
+}
+.stay-popup__price {
+  font: 500 16px/1.2 var(--font-serif);
+  color: var(--ink);
+  margin: 6px 0 12px;
+}
+.stay-popup__link {
+  display: inline-block;
+  font: 400 11px/1 var(--font-sans);
+  letter-spacing: 0.16em;
+  text-transform: uppercase;
+  color: var(--green) !important;
+  text-decoration: none;
+  border-bottom: 1px solid var(--accent);
+  padding-bottom: 3px;
+}
+
+/* shared bits still used by the mobile active-card */
 .stay-card__type {
   font: 400 10px/1 var(--font-sans);
   letter-spacing: 0.2em;
@@ -657,20 +766,6 @@ a {
   font: 400 14px/1.4 var(--font-serif);
   color: var(--muted);
   margin-bottom: 4px;
-}
-.pop__price {
-  font: 500 16px/1.2 var(--font-serif);
-  color: var(--ink);
-  margin-bottom: 12px;
-}
-.pop__link {
-  font: 400 11px/1 var(--font-sans);
-  letter-spacing: 0.16em;
-  text-transform: uppercase;
-  color: var(--green);
-  text-decoration: none;
-  border-bottom: 1px solid var(--accent);
-  padding-bottom: 3px;
 }
 
 .filters {
@@ -713,6 +808,27 @@ a {
   background: var(--green);
   color: var(--paper);
 }
+.filter-search {
+  flex: 1 1 220px;
+  min-width: 200px;
+}
+.search-input {
+  width: 100%;
+  padding: 9px 14px;
+  border-radius: 999px;
+  border: 1px solid var(--input-border);
+  background: var(--card);
+  color: var(--ink);
+  font: 400 14px var(--font-serif);
+  outline: none;
+  transition: border-color 0.15s;
+}
+.search-input:focus {
+  border-color: var(--green);
+}
+.search-input::placeholder {
+  color: var(--muted-2);
+}
 
 .cards {
   max-width: 1100px;
@@ -736,6 +852,10 @@ a {
 .stay-card:hover {
   box-shadow: 0 12px 28px rgba(11, 22, 55, 0.1);
 }
+.stay-card--active {
+  border-color: var(--green);
+  box-shadow: 0 12px 28px rgba(11, 22, 55, 0.12);
+}
 .stay-card__thumb {
   width: 104px;
   height: 104px;
@@ -746,6 +866,24 @@ a {
   display: flex;
   align-items: center;
   justify-content: center;
+}
+.stay-card__num {
+  position: absolute;
+  top: 8px;
+  left: 8px;
+  width: 22px;
+  height: 22px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  border-radius: 999px;
+  background: var(--accent);
+  color: var(--card);
+  font: 600 11px/1 var(--font-sans);
+  box-shadow: 0 2px 5px rgba(11, 22, 55, 0.2);
+}
+.stay-card--active .stay-card__num {
+  background: var(--green);
 }
 .stay-card__body {
   flex: 1;
@@ -774,6 +912,15 @@ a {
 .stay-card__price {
   font: 500 16px var(--font-serif);
   color: var(--ink);
+}
+.stay-card__link {
+  text-decoration: none;
+  color: var(--green);
+  white-space: nowrap;
+  transition: color 0.15s;
+}
+.stay-card__link:hover {
+  color: var(--accent);
 }
 .no-results {
   max-width: 1100px;
@@ -910,10 +1057,7 @@ a {
   }
 
   .map {
-    height: 300px;
-  }
-  .pop {
-    display: none; /* mobile shows the active card below the map instead */
+    height: 360px;
   }
   .active-card {
     display: block;
