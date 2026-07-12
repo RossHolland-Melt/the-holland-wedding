@@ -58,7 +58,7 @@ const cards = [
   {
     Icon: DressIcon,
     title: "Dress Code",
-    body: "Garden formal: think dusty greens and blush. A gentle heads-up, heels and lawn rarely agree, so block heels are your friend.",
+    body: "Garden formal, soft and elegant. A gentle heads-up, heels and lawn rarely agree, so block heels are your friend.",
   },
 ];
 
