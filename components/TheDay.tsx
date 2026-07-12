@@ -72,6 +72,8 @@ export default function TheDay() {
         ))}
       </div>
 
+      <p className="schedule__disclaimer">* Timings are a guide and may shift gently on the day.</p>
+
       <div className="info-grid">
         {cards.map(({ Icon, title, body }) => (
           <div key={title} className="info-card">

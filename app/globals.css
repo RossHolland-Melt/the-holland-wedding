@@ -357,6 +357,14 @@ a {
   color: var(--muted);
   font-style: italic;
 }
+.schedule__disclaimer {
+  max-width: 560px;
+  margin: 18px auto 0;
+  font: 400 14px/1.5 var(--font-serif);
+  font-style: italic;
+  color: var(--muted);
+  text-align: center;
+}
 .info-grid {
   max-width: 980px;
   margin: 54px auto 0;
