@@ -306,10 +306,14 @@ a {
 /* story */
 .story__text {
   max-width: 680px;
-  margin: 0 auto;
+  margin: 0 auto 1.4em;
   font: 400 21px/1.85 var(--font-serif);
   color: var(--ink);
+  text-align: left;
   text-wrap: pretty;
+}
+.story__text:last-of-type {
+  margin-bottom: 0;
 }
 .script-heading {
   margin: 14px 0 22px;
