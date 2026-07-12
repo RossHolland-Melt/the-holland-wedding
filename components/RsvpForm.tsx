@@ -39,8 +39,8 @@ export default function RsvpForm() {
       <SectionDivider />
       <h2 className="serif-heading">RSVP</h2>
       <p className="lead">
-        We can&rsquo;t wait to celebrate with you. Kindly respond by 1 March
-        2027.
+        We can&rsquo;t wait to celebrate with you. Kindly respond by 1 December
+        2026.
       </p>
 
       {status === "done" ? (

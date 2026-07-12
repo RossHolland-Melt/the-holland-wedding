@@ -33,6 +33,17 @@ const DressIcon = () => (
   </svg>
 );
 
+const CalendarIcon = () => (
+  <svg width="17" height="17" viewBox="0 0 24 24" fill="none" aria-hidden="true">
+    <g stroke="currentColor" strokeWidth="1.6" strokeLinecap="round" strokeLinejoin="round">
+      <rect x="3" y="4.5" width="18" height="16.5" rx="2.5" />
+      <path d="M3 9 H21" />
+      <path d="M8 2.5 V6.5" />
+      <path d="M16 2.5 V6.5" />
+    </g>
+  </svg>
+);
+
 const cards = [
   {
     Icon: VenueIcon,
@@ -73,6 +84,11 @@ export default function TheDay() {
       </div>
 
       <p className="schedule__disclaimer">* Timings are a guide and may shift gently on the day.</p>
+
+      <a href="/api/calendar" className="btn-cal">
+        <CalendarIcon />
+        Add to Calendar
+      </a>
 
       <div className="info-grid">
         {cards.map(({ Icon, title, body }) => (
