@@ -689,58 +689,6 @@ export const stays: Stay[] = [
       "Two affordable, fully-equipped cottages on a tenth-generation working vineyard in the Bottelary Hills, each with a private braai patio and sweeping hill views.",
     url: "https://www.lekkeslaap.co.za/accommodation/klein-bottelary",
   },
-  {
-    id: "groenvlei-guest-farm",
-    name: "Groenvlei Guest Farm",
-    type: "Farm stay",
-    area: "Bottelary",
-    lat: -33.903356,
-    lng: 18.729783,
-    band: 1,
-    price: "from R950 / night",
-    blurb:
-      "A family-run working grape farm in the Bottelary Hills with peaceful self-catering units, vineyard and mountain views, and romantic sunsets over distant Table Mountain.",
-    url: "https://www.lekkeslaap.co.za/accommodation/groenvlei-guest-farm",
-  },
-  {
-    id: "middelplaas-paarl-guesthouse",
-    name: "Middelplaas Paarl Guesthouse",
-    type: "Guesthouse",
-    area: "Paarl",
-    lat: -33.687786,
-    lng: 18.967611,
-    band: 1,
-    price: "from R1,200 / night",
-    blurb:
-      "A warm, family-run farm guesthouse on the R45 just outside Paarl, known for spacious rooms, generous breakfasts and tranquil pond views in the winelands.",
-    url: "https://www.mppaarl.co.za/",
-  },
-  {
-    id: "tempel-wines-estate-guesthouse",
-    name: "Tempel Wines Estate Guesthouse",
-    type: "Farm stay",
-    area: "Paarl",
-    lat: -33.676604,
-    lng: 18.973603,
-    band: 2,
-    price: "from R1,729 / night",
-    blurb:
-      "A boutique wine farm on the bank of the Berg River, offering four renovated en-suite rooms, a heated infinity pool and a complimentary cellar tour.",
-    url: "https://tempelwines.co.za/",
-  },
-  {
-    id: "mooi-bly",
-    name: "Mooi Bly",
-    type: "Self-catering",
-    area: "Paarl",
-    lat: -33.687358,
-    lng: 19.021419,
-    band: 1,
-    price: "from R1,150 / night",
-    blurb:
-      "A small family-owned wine estate on the Du Toit mountain slopes with five charming thatched cottages, big gardens and a fresh-mountain-water pool over the Paarl valley.",
-    url: "https://www.mooibly.com/",
-  },
 ];
 
 // ---------------------------------------------------------------------------
