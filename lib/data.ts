@@ -39,7 +39,7 @@ export type Stay = {
   phone?: string;
 };
 
-// The wedding venue — the map's centre point.
+// The wedding venue - the map's centre point.
 // Coordinates cross-verified via OpenStreetMap/Nominatim + Google Maps.
 export const venue = {
   name: "Natte Valleij",
@@ -88,7 +88,7 @@ export const stays: Stay[] = [
     band: 2,
     price: "Enquire for rates",
     blurb:
-      "A gracious private wine-farm manor on the R44 with five en-suite bedrooms, a garden cottage, pool and sweeping mountain views — lovely for a family or group.",
+      "A gracious private wine-farm manor on the R44 with five en-suite bedrooms, a garden cottage, pool and sweeping mountain views, lovely for a family or group.",
     url: "https://book.nightsbridge.com/35166",
   },
   {
@@ -153,7 +153,7 @@ export const stays: Stay[] = [
     band: 2,
     price: "from R2,600 / night",
     blurb:
-      "A romantic, art-filled one-bedroom cottage — once the studio of painter George Paul Canitz — on the atmospheric 300-year-old Muratie estate with Simonsberg views.",
+      "A romantic, art-filled one-bedroom cottage, once the studio of painter George Paul Canitz, on the atmospheric 300-year-old Muratie estate with Simonsberg views.",
     url: "https://www.lekkeslaap.co.za/accommodation/the-gp-canitz-guest-cottage",
   },
   {
@@ -413,7 +413,7 @@ export const stays: Stay[] = [
     band: 3,
     price: "from R4,700 / night",
     blurb:
-      "An elegant working wine estate with fireside suites, a pool, mountain views and on-site tastings — a romantic upper-mid-range option close to the venue.",
+      "An elegant working wine estate with fireside suites, a pool, mountain views and on-site tastings, a romantic upper-mid-range option close to the venue.",
     url: "https://www.plaisir.co.za/stay/",
   },
   {
@@ -569,7 +569,7 @@ export const stays: Stay[] = [
     band: 1,
     price: "from R750 / night",
     blurb:
-      "A central, well-established hostel on Bird Street with a guest kitchen and easy walking access to town, the university and restaurants — a dependable budget pick.",
+      "A central, well-established hostel on Bird Street with a guest kitchen and easy walking access to town, the university and restaurants, a dependable budget pick.",
     url: "https://www.tripadvisor.co.za/Hotel_Review-g312673-d1863147-Reviews-IKhaya_Stellenbosch_Backpackers-Stellenbosch_Western_Cape.html",
   },
   {

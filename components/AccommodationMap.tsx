@@ -10,7 +10,7 @@ type Props = {
   stays: Stay[]; // already filtered + sorted (closest first)
   activeId: string | null;
   onSelect: (id: string) => void;
-  expanded?: boolean; // full-screen toggle — triggers a Leaflet resize
+  expanded?: boolean; // full-screen toggle - triggers a Leaflet resize
 };
 
 const VENUE_ICON = L.divIcon({

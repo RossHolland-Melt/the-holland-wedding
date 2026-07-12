@@ -1,5 +1,5 @@
 /* =========================================================================
-   Ross & Chloe — wedding site theme
+   Ross & Chloe - wedding site theme
    Faithful port of the Design Composer mockup (design/).
    ========================================================================= */
 
@@ -653,7 +653,7 @@ a {
   border-color: var(--border) !important;
 }
 
-/* venue marker — green heart pin with a permanent label */
+/* venue marker - green heart pin with a permanent label */
 .venue-marker,
 .stay-marker {
   background: none;
@@ -986,7 +986,7 @@ a {
 }
 
 /* =========================================================================
-   Responsive — collapse the desktop layout to the mockup's mobile sizing
+   Responsive - collapse the desktop layout to the mockup's mobile sizing
    ========================================================================= */
 @media (max-width: 768px) {
   :root {

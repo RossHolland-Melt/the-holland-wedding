@@ -47,7 +47,7 @@ export default function RsvpForm() {
         <div className="rsvp__success">
           <h3 className="script-heading">Thank you</h3>
           <p className="story__text">
-            Your RSVP is in &mdash; we can&rsquo;t wait to celebrate with you.
+            Your RSVP is in. We can&rsquo;t wait to celebrate with you.
           </p>
         </div>
       ) : (
@@ -111,7 +111,7 @@ export default function RsvpForm() {
               id="song_request"
               name="song_request"
               type="text"
-              placeholder="Artist — Title"
+              placeholder="Artist, Title"
               className="input"
             />
           </div>
