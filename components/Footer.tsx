@@ -13,7 +13,7 @@ export default function Footer() {
         <a href="mailto:rosschloeholland@gmail.com">
           rosschloeholland@gmail.com
         </a>{" "}
-        · <a href="tel:+27718646982">+27 71 864 6982</a>
+        · <a href="tel:+27793248388">+27 793 248 388</a>
       </div>
     </footer>
   );
