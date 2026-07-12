@@ -42,7 +42,7 @@ const cards = [
   {
     Icon: RouteIcon,
     title: "Getting There",
-    body: "About 45 minutes from Cape Town. Parking on site; a shuttle leaves Klapmuts at 14:15. Ride-hailing reaches the farm easily.",
+    body: "About 45 minutes from Cape Town. Parking on site; ride-hailing reaches the farm easily.",
   },
   {
     Icon: DressIcon,
