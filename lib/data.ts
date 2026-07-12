@@ -10,7 +10,7 @@ export const schedule: ScheduleItem[] = [
   { time: "2:30 pm", title: "Arrival & welcome", note: "Bubbles on the werf" },
   { time: "3:00 pm", title: "The ceremony", note: "Under the old oaks" },
   { time: "4:15 pm", title: "Canapés & photographs", note: "Through the gardens" },
-  { time: "6:00 pm", title: "Reception & dinner", note: "In the historic cellar" },
+  { time: "6:00 pm", title: "Reception & dinner", note: "In the historic cellar / under the green trees (to be decided)" },
   { time: "8:00 pm", title: "Speeches & toasts", note: "" },
   { time: "9:00 pm", title: "Dancing", note: "Until the early hours" },
   { time: "12:00 am", title: "Carriages", note: "" },
