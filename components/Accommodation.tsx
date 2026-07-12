@@ -31,7 +31,7 @@ const priceOpts: Opt[] = [
   { k: "3", label: "R R R" },
 ];
 
-// thumbnail tint by type — keeps the card grid looking warm without photos
+// thumbnail tint by type - keeps the card grid looking warm without photos
 const TONES: Record<StayType, string> = {
   Guesthouse: "#EFDCDE",
   Hotel: "#EDE0C9",
@@ -129,7 +129,7 @@ export default function Accommodation() {
       <div className="eyebrow">Cape Winelands</div>
       <h2 className="serif-heading">Where to Stay</h2>
       <p className="lead">
-        Lovely places to lay your head near the farm &mdash; tap a pin or a card to
+        Lovely places to lay your head near the farm. Tap a pin or a card to
         find your bearings, then book straight through.
       </p>
 
@@ -271,7 +271,7 @@ export default function Accommodation() {
         </div>
       ) : (
         <div className="no-results">
-          No stays match these filters just yet &mdash; try widening your search.
+          No stays match these filters just yet. Try widening your search.
         </div>
       )}
     </section>

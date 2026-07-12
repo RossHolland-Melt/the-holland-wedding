@@ -42,12 +42,12 @@ const cards = [
   {
     Icon: RouteIcon,
     title: "Getting There",
-    body: "About 45 minutes from Cape Town. Parking on site; a shuttle leaves Klapmuts at 14:15. Ride-hailing reaches the farm easily.",
+    body: "About 45 minutes from Cape Town. Parking on site; ride-hailing reaches the farm easily.",
   },
   {
     Icon: DressIcon,
     title: "Dress Code",
-    body: "Garden formal — think dusty greens and blush. A gentle heads-up: heels and lawn rarely agree, so block heels are your friend.",
+    body: "Garden formal: think dusty greens and blush. A gentle heads-up, heels and lawn rarely agree, so block heels are your friend.",
   },
 ];
 
@@ -71,6 +71,8 @@ export default function TheDay() {
           </div>
         ))}
       </div>
+
+      <p className="schedule__disclaimer">* Timings are a guide and may shift gently on the day.</p>
 
       <div className="info-grid">
         {cards.map(({ Icon, title, body }) => (

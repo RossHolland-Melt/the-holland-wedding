@@ -48,7 +48,7 @@ export function SectionDivider({ width = 200 }: { width?: number }) {
   );
 }
 
-// Cape Dutch gable crest — used in the footer (with finial) and the map marker.
+// Cape Dutch gable crest - used in the footer (with finial) and the map marker.
 export function Gable({
   width = 120,
   strokeWidth = 1.7,
