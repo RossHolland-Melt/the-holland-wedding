@@ -7,8 +7,8 @@ export type ScheduleItem = {
 };
 
 export const schedule: ScheduleItem[] = [
-  { time: "3:00 pm", title: "Arrival & welcome", note: "Bubbles on the werf" },
-  { time: "3:30 pm", title: "The ceremony", note: "Under the old oaks" },
+  { time: "2:30 pm", title: "Arrival & welcome", note: "Bubbles on the werf" },
+  { time: "3:00 pm", title: "The ceremony", note: "Under the old oaks" },
   { time: "4:15 pm", title: "Canapés & photographs", note: "Through the gardens" },
   { time: "6:00 pm", title: "Reception & dinner", note: "In the historic cellar" },
   { time: "8:00 pm", title: "Speeches & toasts", note: "" },
