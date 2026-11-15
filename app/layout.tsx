@@ -31,7 +31,7 @@ export const metadata: Metadata = {
   openGraph: {
     title: "Ross & Chloe · 10 April 2027",
     description:
-      "Join us as we say our vows among the vines at Natte Valleij Estate, Cape Winelands.",
+      "Join us as we say our vows among the trees and flowers at Natte Valleij Estate, Cape Winelands.",
     type: "website",
   },
 };
